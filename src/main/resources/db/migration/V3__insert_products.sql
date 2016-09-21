@@ -1,0 +1,1 @@
+insert into products values(1001, 'toothbrush', 'dental', 'oral inc', 12.99);

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: product-service
+  datasource:
+      driverClassName: org.postgresql.Driver
+      url: jdbc:postgresql://ec2-52-35-173-156.us-west-2.compute.amazonaws.com:5432/postgres
+      username: postgres
+      maximumPoolSize: 3
+      autoCommit: true
+      registerMbeans: true
+      poolName: dockerdemopool
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      allowPoolSuspension: true
+
+flyway:
+  enabled: true
+
+server:
+  port:
+    9091
