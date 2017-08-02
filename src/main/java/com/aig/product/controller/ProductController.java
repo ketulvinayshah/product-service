@@ -24,8 +24,8 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "products")
     @ApiOperation(value = "Get list of products")
     @Timed
-    public List<Product> getProducts(){
-        return productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(){
+        return ResponseEntity.ok(productService.getProducts());
     }
 
 
@@ -35,12 +35,5 @@ public class ProductController {
     public ResponseEntity<String> addProduct(@ApiParam @RequestBody @Valid Product product){
         productService.addProductToQueue(product);
         return ResponseEntity.ok("Product Added");
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "product")
-    @ApiOperation(value = "Get a product")
-    @Timed
-    public Product getProduct(@ApiParam @RequestParam String name){
-        return productService.getProduct(name);
     }
 }
