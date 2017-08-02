@@ -1,0 +1,4 @@
+applications:
+- name: product-service
+  memory: 512M
+  host: my-host

@@ -1,10 +1,11 @@
-package com.docker.demo.repository;
+package com.aig.product.repository;
 
-import com.docker.demo.entity.Product;
+import com.aig.product.entity.Product;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, String> {
+    Product findByName(String name);
 }
 

@@ -1,4 +1,6 @@
-package com.docker.demo.entity;
+package com.aig.product.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -7,6 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("unused")
 public class Product {
 
     @Id
@@ -98,6 +102,16 @@ public class Product {
                 ", category='" + category + '\'' +
                 ", company='" + company + '\'' +
                 ", price=" + price +
+                '}';
+    }
+
+    public String toJsonString() {
+        return "{" +
+                "\"id\":" + id +
+                ", \"name\":\"" + name + '\"' +
+                ", \"category\":\"" + category + '\"' +
+                ", \"company\":\"" + company + '\"' +
+                ", \"price\":" + price +
                 '}';
     }
 }

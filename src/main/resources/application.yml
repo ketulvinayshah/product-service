@@ -2,21 +2,42 @@ spring:
   application:
     name: product-service
   datasource:
-      driverClassName: org.postgresql.Driver
-      url: jdbc:postgresql://ec2-52-35-173-156.us-west-2.compute.amazonaws.com:5432/postgres
-      username: postgres
-      maximumPoolSize: 3
-      autoCommit: true
-      registerMbeans: true
-      poolName: dockerdemopool
-      prepStmtCacheSize: 250
-      prepStmtCacheSqlLimit: 2048
-      useServerPrepStmts: true
-      allowPoolSuspension: true
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    maximumPoolSize: 3
+    autoCommit: true
+    registerMbeans: true
+    poolName: dockerdemopool
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+    allowPoolSuspension: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+        temp:
+          use_jdbc_metadata_defaults: false
 
 flyway:
   enabled: true
 
 server:
-  port:
-    9091
+  port: 9091
+
+management:
+  port: 9092
+  security:
+    enabled: false

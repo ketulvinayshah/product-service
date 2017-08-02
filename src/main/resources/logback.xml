@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>target/product-service.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>product-service.%d{yyyy-MM-dd}.log</FileNamePattern>
+
+            <!-- keep 3 days' worth of history -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="dailyRollingFileAppender" />
+    </root>
+</configuration>
