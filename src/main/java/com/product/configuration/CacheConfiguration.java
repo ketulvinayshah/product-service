@@ -1,4 +1,4 @@
-package com.aig.product.configuration;
+package com.product.configuration;
 
 import com.gemstone.gemfire.cache.Cache;
 import com.gemstone.gemfire.cache.GemFireCache;

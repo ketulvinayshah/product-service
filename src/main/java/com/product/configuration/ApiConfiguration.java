@@ -1,4 +1,4 @@
-package com.aig.product.configuration;
+package com.product.configuration;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.service.ApiInfo;

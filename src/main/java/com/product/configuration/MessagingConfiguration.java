@@ -1,6 +1,6 @@
-package com.aig.product.configuration;
+package com.product.configuration;
 
-import com.aig.product.service.MessageReceiverService;
+import com.product.service.MessageReceiverService;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;

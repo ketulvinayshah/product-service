@@ -1,4 +1,4 @@
-package com.aig.product.configuration;
+package com.product.configuration;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;

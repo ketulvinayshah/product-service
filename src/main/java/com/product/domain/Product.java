@@ -1,39 +1,35 @@
-package com.aig.product.entity;
+package com.product.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Created by kshah on 8/15/16.
  */
 @Entity
-@Table(name = "products")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@SuppressWarnings("unused")
 public class Product {
 
     @Id
-    @Column(name = "product_id")
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "category")
     private String category;
 
-    @Column(name = "company")
     private String company;
 
-    @Column(name = "price")
     private float price;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -81,7 +77,6 @@ public class Product {
         if (!getName().equals(product.getName())) return false;
         if (!getCategory().equals(product.getCategory())) return false;
         return getCompany().equals(product.getCompany());
-
     }
 
     @Override
@@ -97,7 +92,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", company='" + company + '\'' +
@@ -107,7 +102,7 @@ public class Product {
 
     public String toJsonString() {
         return "{" +
-                "\"id\":" + id +
+                "\"id\":\"" + id + '\"' +
                 ", \"name\":\"" + name + '\"' +
                 ", \"category\":\"" + category + '\"' +
                 ", \"company\":\"" + company + '\"' +
