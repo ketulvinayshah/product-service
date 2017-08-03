@@ -1,13 +1,13 @@
 package com.product.configuration;
 
-import com.product.service.MessageReceiverService;
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,34 +16,38 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MessagingConfiguration {
-    public final static String queueName = "products-queue";
+    private final String PRODUCTS_EXCHANGE = "products.manager";
 
     @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
-    }
-
-    @Bean
-    TopicExchange exchange() {
-        return new TopicExchange("products-exchange");
-    }
-
-    @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(queueName);
-    }
-
-    @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory){
+        SimpleRabbitListenerContainerFactory container = new SimpleRabbitListenerContainerFactory();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
+        container.setMessageConverter(new Jackson2JsonMessageConverter());
         return container;
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(MessageReceiverService messageReceiverService) {
-        return new MessageListenerAdapter(messageReceiverService, "receiveMessage");
+    public DirectExchange directExchange(){
+        return new DirectExchange(PRODUCTS_EXCHANGE, true, false);
+    }
+
+    @Bean
+    public Queue upsert(){
+        return new Queue("products.upsert");
+    }
+
+    @Bean
+    public Binding queuesAndBindings(AmqpAdmin admin){
+        Binding binding = new Binding("products.upsert", Binding.DestinationType.QUEUE, PRODUCTS_EXCHANGE, "products.upsert", null);
+        return binding;
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(converter);
+        template.setExchange(PRODUCTS_EXCHANGE);
+        return template;
     }
 }

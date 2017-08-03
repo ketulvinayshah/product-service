@@ -99,14 +99,4 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
-
-    public String toJsonString() {
-        return "{" +
-                "\"id\":\"" + id + '\"' +
-                ", \"name\":\"" + name + '\"' +
-                ", \"category\":\"" + category + '\"' +
-                ", \"company\":\"" + company + '\"' +
-                ", \"price\":" + price +
-                '}';
-    }
 }

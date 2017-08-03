@@ -1,3 +1,5 @@
+# Spring profiles
+
 spring:
   application:
     name: product-service
@@ -17,11 +19,16 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
+  kafka:
+    consumer:
+      group-id: products
+      auto-offset-reset: earliest
 
   jpa:
+    generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
@@ -30,6 +37,11 @@ spring:
           auto: none
         temp:
           use_jdbc_metadata_defaults: false
+
+endpoints:
+  cors:
+    allowed-origins: http://localhost
+    allowed-methods: GET,POST
 
 flyway:
   enabled: true
