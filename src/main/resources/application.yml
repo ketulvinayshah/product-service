@@ -1,4 +1,4 @@
-# Spring profiles
+
 
 spring:
   application:
@@ -22,7 +22,14 @@ spring:
   kafka:
     consumer:
       group-id: products
-      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
+      auto-commit-interval: 100
+      enable-auto-commit: true
+    producer:
+      batch-size: 16384
+      bootstrap-servers: localhost:9092
+      buffer-memory: 33554432
+      retries: 0
   data:
     cassandra:
       keyspace-name: productkeyspace
@@ -52,6 +59,6 @@ server:
   port: 9091
 
 management:
-  port: 9092
+  port: 19352
   security:
     enabled: false

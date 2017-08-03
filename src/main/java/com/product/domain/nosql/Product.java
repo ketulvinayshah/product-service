@@ -1,6 +1,8 @@
 package com.product.domain.nosql;
 
-import org.springframework.data.cassandra.mapping.PrimaryKey;
+import com.datastax.driver.core.utils.UUIDs;
+import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.mapping.Table;
 
 import java.util.UUID;
@@ -11,9 +13,10 @@ import java.util.UUID;
 @Table
 public class Product {
 
-    @PrimaryKey
-    private UUID id;
+    @PrimaryKeyColumn(name = "id",ordinal = 1,type = PrimaryKeyType.CLUSTERED)
+    private UUID id = UUIDs.timeBased();
 
+    @PrimaryKeyColumn(name="name",ordinal = 0,type = PrimaryKeyType.PARTITIONED)
     private String name;
 
     private String category;

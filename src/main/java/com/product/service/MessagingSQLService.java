@@ -23,7 +23,7 @@ public class MessagingSQLService {
 
     Logger logger = LoggerFactory.getLogger(MessagingSQLService.class);
 
-    @RabbitListener(queues={"snippet.upsert"})
+    @RabbitListener(queues={"products.upsert"})
     @CacheEvict(cacheNames="products", allEntries=true)
     public void rabbitListen(List<Product> products) throws IOException {
         products.forEach(product -> productSQLRepository.save(product));

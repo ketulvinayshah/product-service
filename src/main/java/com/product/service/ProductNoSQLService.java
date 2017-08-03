@@ -22,12 +22,12 @@ public class ProductNoSQLService {
     ProductNoSQLRepository productNoSQLRepository;
 
     @Autowired
-    private KafkaTemplate<String, List<Product>> template;
+    private KafkaTemplate<String, Product> template;
 
     Logger logger = LoggerFactory.getLogger(ProductSQLService.class);
 
-    @Cacheable("product")
-    public Iterable<Product> getProducts(String name, String category, String company){
+    @Cacheable("products")
+    public Iterable<Product> getProductsNoSql(String name, String category, String company){
         Iterable<Product> products;
 
         if(name != null){
@@ -44,20 +44,20 @@ public class ProductNoSQLService {
         return products;
     }
 
-    public void addProductsToQueue(List<Product> products){
+    public void addProductsToQueueNoSql(List<Product> products){
         logger.info("Adding products to queue : {}" , products);
-        template.send("productTopic", products);
+        products.forEach(product -> template.send("productTopic", product));
     }
 
-    @CacheEvict(cacheNames="product", allEntries=true)
-    public Product addProduct(Product product){
+    @CacheEvict(cacheNames="products", allEntries=true)
+    public Product addProductNoSql(Product product){
         Product result = productNoSQLRepository.save(product);
         logger.info("Added product : {}", result.toString());
         return result;
     }
 
-    @CacheEvict(cacheNames="product", allEntries=true)
-    public void deleteProduct(Product product){
+    @CacheEvict(cacheNames="products", allEntries=true)
+    public void deleteProductNoSql(Product product){
         productNoSQLRepository.delete(product);
         logger.info("Deleted product : {}", product.toString());
     }

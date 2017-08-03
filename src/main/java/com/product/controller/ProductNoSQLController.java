@@ -22,40 +22,40 @@ public class ProductNoSQLController {
     @Autowired
     ProductNoSQLService productNoSQLService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "v2/products")
+    @RequestMapping(method = RequestMethod.GET, value = "/v2/products")
     @ApiOperation(value = "Get products")
     @Timed
     public ResponseEntity<List<Product>> getProducts(@ApiParam @RequestParam(required = false) String name, @ApiParam @RequestParam(required = false) String category, @ApiParam @RequestParam(required = false) String company){
-        return ResponseEntity.ok(Lists.newArrayList(productNoSQLService.getProducts(name, category, company)));
+        return ResponseEntity.ok(Lists.newArrayList(productNoSQLService.getProductsNoSql(name, category, company)));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "v2/product")
+    @RequestMapping(method = RequestMethod.POST, value = "/v2/product")
     @ApiOperation(value = "Add product")
     @Timed
     public ResponseEntity<Product> addProduct(@ApiParam(required = true) @RequestBody @Valid Product product){
-        return ResponseEntity.ok(productNoSQLService.addProduct(product));
+        return ResponseEntity.ok(productNoSQLService.addProductNoSql(product));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "v2/product")
+    @RequestMapping(method = RequestMethod.PUT, value = "/v2/product")
     @ApiOperation(value = "Update product")
     @Timed
     public ResponseEntity<Product> updateProduct(@ApiParam(required = true) @RequestBody @Valid Product product){
-        return ResponseEntity.ok(productNoSQLService.addProduct(product));
+        return ResponseEntity.ok(productNoSQLService.addProductNoSql(product));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "v2/product")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/v2/product")
     @ApiOperation(value = "Delete product")
     @Timed
     public ResponseEntity<?> deleteProduct(@ApiParam(required = true) @RequestBody @Valid Product product){
-        productNoSQLService.deleteProduct(product);
+        productNoSQLService.deleteProductNoSql(product);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "v2/products")
+    @RequestMapping(method = RequestMethod.POST, value = "/v2/products")
     @ApiOperation(value = "Add/Update products")
     @Timed
     public ResponseEntity<?> addProduct(@ApiParam(required = true) @RequestBody @Valid List<Product> products){
-        productNoSQLService.addProductsToQueue(products);
+        productNoSQLService.addProductsToQueueNoSql(products);
         return ResponseEntity.ok().build();
     }
 }

@@ -10,8 +10,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Created by kshah on 8/1/17.
  */
@@ -24,9 +22,9 @@ public class MessagingNoSqlService {
     Logger logger = LoggerFactory.getLogger(MessagingNoSqlService.class);
 
     @KafkaListener(topics = "productTopic")
-    @CacheEvict(cacheNames="product", allEntries=true)
-    public void listen(ConsumerRecord<String, List<Product>> cr) throws Exception {
-        cr.value().forEach(product -> productNoSQLRepository.save(product));
+    @CacheEvict(cacheNames="products", allEntries=true)
+    public void listenNoSql(ConsumerRecord<String, Product> cr) throws Exception {
+        productNoSQLRepository.save(cr.value());
     }
 
 }
