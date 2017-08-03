@@ -25,7 +25,7 @@ spring:
       auto-offset-reset: earliest
   data:
     cassandra:
-      keyspace-name: product-keyspace
+      keyspace-name: productkeyspace
   jpa:
     generate-ddl: true
     show-sql: true
