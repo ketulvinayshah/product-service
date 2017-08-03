@@ -4,7 +4,7 @@ package com.product.repository;
  * Created by kshah on 8/2/17.
  */
 
-import com.product.domain.Product;
+import com.product.domain.nosql.Product;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;

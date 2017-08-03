@@ -1,6 +1,6 @@
 package com.product.controller;
 
-import com.product.domain.Product;
+import com.product.domain.sql.Product;
 import com.product.service.ProductSQLService;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by kshah on 8/15/16.
  */
 @RestController
-public class ProductController {
+public class ProductSQLController {
 
     @Autowired
     ProductSQLService productSQLService;

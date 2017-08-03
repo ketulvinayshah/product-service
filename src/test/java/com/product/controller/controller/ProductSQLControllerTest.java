@@ -21,14 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class ProductControllerTest {
+public class ProductSQLControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void shouldReturnAllProducts() throws Exception {
-        this.mockMvc.perform(get("/products")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("v1/products")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("toothbrush")));
     }
 }

@@ -1,6 +1,6 @@
 package com.product.repository;
 
-import com.product.domain.Product;
+import com.product.domain.sql.Product;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

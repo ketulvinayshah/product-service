@@ -23,7 +23,9 @@ spring:
     consumer:
       group-id: products
       auto-offset-reset: earliest
-
+  data:
+    cassandra:
+      keyspace-name: product-keyspace
   jpa:
     generate-ddl: true
     show-sql: true

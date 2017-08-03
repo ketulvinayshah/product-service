@@ -1,7 +1,6 @@
 package com.product.service;
 
-import com.product.configuration.MessagingConfiguration;
-import com.product.domain.Product;
+import com.product.domain.nosql.Product;
 import com.product.repository.ProductNoSQLRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +24,22 @@ public class ProductNoSQLService {
     @Autowired
     private KafkaTemplate<String, List<Product>> template;
 
-    Logger logger = LoggerFactory.getLogger(ProductNoSQLService.class);
+    Logger logger = LoggerFactory.getLogger(ProductSQLService.class);
 
     @Cacheable("product")
-    public Iterable<Product> getProducts(String name, String category, String company, Float priceGreaterThan, Float priceLessThan){
+    public Iterable<Product> getProducts(String name, String category, String company){
         Iterable<Product> products;
 
+        if(name != null){
+            products = productNoSQLRepository.findByName(name);
+        }else if(category != null){
+            products = productNoSQLRepository.findByCategory(category);
+        }else if(company != null){
+            products = productNoSQLRepository.findByCompany(company);
+        }else{
+            products = productNoSQLRepository.findAll();
+        }
+        
         logger.info("Got products : {}",  products);
         return products;
     }

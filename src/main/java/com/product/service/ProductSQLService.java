@@ -1,6 +1,6 @@
 package com.product.service;
 
-import com.product.domain.Product;
+import com.product.domain.sql.Product;
 import com.product.repository.ProductSQLRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

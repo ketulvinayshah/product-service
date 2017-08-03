@@ -1,6 +1,6 @@
 package com.product.service;
 
-import com.product.domain.Product;
+import com.product.domain.sql.Product;
 import com.product.repository.ProductNoSQLRepository;
 import com.product.repository.ProductSQLRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
