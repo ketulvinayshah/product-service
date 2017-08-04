@@ -1,5 +1,6 @@
 package com.product.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.product.domain.sql.Product;
 import com.product.repository.ProductSQLRepository;
 import org.slf4j.Logger;
@@ -72,8 +73,15 @@ public class ProductSQLService {
         logger.info("Deleted product : {}", product.toString());
     }
 
+    @HystrixCommand(fallbackMethod = "containsProductFallback")
     public boolean containsProduct(String productName) {
         List products = restTemplate.getForObject("http://product-service/v1/products?name=" + productName, List.class);
+        return products.size() > 0;
+    }
+
+    public boolean containsProductFallback(String productName) {
+        logger.info("Fallback containsProduct used.");
+        List<Product> products = productSQLRepository.findByNameIgnoreCaseOrderByNameAsc(productName);
         return products.size() > 0;
     }
 }
