@@ -1,5 +1,7 @@
 package com.product.service;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import com.product.domain.sql.Product;
 import com.product.repository.ProductSQLRepository;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,6 +23,9 @@ public class ProductSQLService {
 
     @Autowired
     ProductSQLRepository productSQLRepository;
+
+    @Autowired
+    EurekaClient discoveryClient;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -66,5 +72,18 @@ public class ProductSQLService {
     public void deleteProduct(Product product){
         productSQLRepository.delete(product);
         logger.info("Deleted product : {}", product.toString());
+    }
+
+    public boolean containsProduct(String productName) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        InstanceInfo instance = discoveryClient.getNextServerFromEureka("product-service", false);
+        logger.debug("instanceID: {}", instance.getId());
+
+        String productServiceUrl = instance.getHomePageUrl();
+        logger.debug("product service homePageUrl: {}", productServiceUrl);
+
+        List products = restTemplate.getForObject(productServiceUrl + "/v1/products?" + "name=" + productName, List.class);
+        return products.size() > 0;
     }
 }

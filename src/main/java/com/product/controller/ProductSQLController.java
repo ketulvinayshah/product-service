@@ -29,6 +29,13 @@ public class ProductSQLController {
         return ResponseEntity.ok(Lists.newArrayList(productSQLService.getProducts(name, category, company, priceGreaterThan, priceLessThan)));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/v1/product/active")
+    @ApiOperation(value = "Check if a product is active")
+    @Timed
+    public ResponseEntity<Boolean> isProductPresent(@ApiParam @RequestParam String name){
+        return ResponseEntity.ok(productSQLService.containsProduct(name));
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/v1/product")
     @ApiOperation(value = "Add product")
     @Timed

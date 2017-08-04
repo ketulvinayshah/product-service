@@ -59,7 +59,7 @@ public class SchedulerConfiguration {
         return TriggerBuilder.newTrigger().forJob(job)
                 .withIdentity("Qrtz_Trigger")
                 .withDescription("Sample trigger")
-                .withSchedule(simpleSchedule().repeatForever().withIntervalInMinutes(1))
+                .withSchedule(simpleSchedule().repeatForever().withIntervalInHours(1))
                 .build();
     }
 }
