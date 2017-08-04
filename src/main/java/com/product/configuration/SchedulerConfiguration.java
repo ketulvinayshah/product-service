@@ -7,6 +7,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
  */
 @Configuration
 @ConditionalOnProperty(name = "jobs.enabled", havingValue = "true")
+@RefreshScope
 public class SchedulerConfiguration {
 
     @Autowired

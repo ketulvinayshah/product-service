@@ -3,6 +3,7 @@ package com.product.configuration;
 import com.gemstone.gemfire.cache.Cache;
 import com.gemstone.gemfire.cache.GemFireCache;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.gemfire.CacheFactoryBean;
@@ -17,6 +18,7 @@ import java.util.Properties;
 
 @EnableCaching
 @Configuration
+@RefreshScope
 public class CacheConfiguration {
 
     @Bean
