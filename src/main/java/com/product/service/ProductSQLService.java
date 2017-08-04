@@ -1,7 +1,5 @@
 package com.product.service;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
 import com.product.domain.sql.Product;
 import com.product.repository.ProductSQLRepository;
 import org.slf4j.Logger;
@@ -25,7 +23,7 @@ public class ProductSQLService {
     ProductSQLRepository productSQLRepository;
 
     @Autowired
-    EurekaClient discoveryClient;
+    RestTemplate restTemplate;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -75,15 +73,7 @@ public class ProductSQLService {
     }
 
     public boolean containsProduct(String productName) {
-
-        RestTemplate restTemplate = new RestTemplate();
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka("product-service", false);
-        logger.debug("instanceID: {}", instance.getId());
-
-        String productServiceUrl = instance.getHomePageUrl();
-        logger.debug("product service homePageUrl: {}", productServiceUrl);
-
-        List products = restTemplate.getForObject(productServiceUrl + "/v1/products?" + "name=" + productName, List.class);
+        List products = restTemplate.getForObject("http://product-service/v1/products?name=" + productName, List.class);
         return products.size() > 0;
     }
 }
