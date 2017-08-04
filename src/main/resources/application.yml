@@ -1,5 +1,3 @@
-
-
 spring:
   application:
     name: product-service
@@ -62,3 +60,6 @@ management:
   port: 19352
   security:
     enabled: false
+
+jobs:
+  enabled: true
